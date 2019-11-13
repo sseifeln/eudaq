@@ -50,7 +50,8 @@ AidaTluProducer::AidaTluProducer(const std::string name, const std::string &runc
   m_lasttime = 0;
 }
 
-void AidaTluProducer::RunLoop(){
+void AidaTluProducer::RunLoop()
+{
   std::unique_lock<std::mutex> lk(m_mtx_tlu);
   bool isbegin = true;
   m_tlu->ResetCounters();
@@ -123,7 +124,8 @@ void AidaTluProducer::RunLoop(){
   m_tlu->SetRunActive(0, 1);
 }
 
-void AidaTluProducer::DoInitialise(){
+void AidaTluProducer::DoInitialise()
+{
   /* Establish a connection with the TLU using IPBus.
      Define the main hardware parameters.
   */
@@ -198,7 +200,8 @@ void AidaTluProducer::DoInitialise(){
   }
 }
 
-void AidaTluProducer::DoConfigure() {
+void AidaTluProducer::DoConfigure() 
+{
 
   auto conf = GetConfiguration();
 
@@ -304,19 +307,22 @@ void AidaTluProducer::DoStopRun(){
   EUDAQ_INFO("TLU STOP command received");
 }
 
-void AidaTluProducer::DoTerminate(){
+void AidaTluProducer::DoTerminate()
+{
   m_exit_of_run = true;
   EUDAQ_INFO("TLU TERMINATE command received");
 }
 
-void AidaTluProducer::DoReset(){
+void AidaTluProducer::DoReset()
+{
   m_exit_of_run = true;
   EUDAQ_INFO("TLU RESET command received");
   std::unique_lock<std::mutex> lk(m_mtx_tlu); //waiting for the runloop's return
   m_tlu.reset();
 }
 
-void AidaTluProducer::DoStatus() {
+void AidaTluProducer::DoStatus() 
+{
   if (m_tlu) {
     m_duration = double(m_lasttime - m_starttime) / 1000000000; // in seconds
     uint32_t sl0, sl1, sl2, sl3, sl4, sl5, pret, post;
